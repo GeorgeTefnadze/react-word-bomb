@@ -34,11 +34,11 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(5); // Timer starts at 5 seconds
   const [isRunning, setIsRunning] = useState(true); // Control if the timer is running
 
-  useEffect(() => {
-    // console.clear();
-    console.log("guess :", guess);
-    console.log("joinedGuess:", joinedGuess);
-  }, [guess, joinedGuess]);
+  // useEffect(() => {
+  //   // console.clear();
+  //   console.log("guess :", guess);
+  //   console.log("joinedGuess:", joinedGuess);
+  // }, [guess, joinedGuess]);
 
   useEffect(() => {
     const findGreenIndexes = () => {
