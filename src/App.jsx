@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Progress } from "@/components/ui/progress";
 import wordsJson from "./assets/words.json";
 import Letter from "./components/letter";
 import "./App.scss";
@@ -196,12 +197,14 @@ function App() {
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center bg-slate-400">
-      <div className="w-1/2 h-10 bg-white rounded-full mb-3">
+      {/* <div className="w-1/2 h-10 bg-white rounded-full mb-3">
         <div
           className="h-10 bg-green-600 rounded-full"
           style={{ width: `${progressBarWidth}%` }}
         ></div>
-      </div>
+      </div> */}
+      <Progress value={progressBarWidth} className="w-2/3 " />
+
       <div className="w-full h-1 flex items-center justify-center mt-10">
         {joinedGuess.map((letter, index) => (
           <Letter
