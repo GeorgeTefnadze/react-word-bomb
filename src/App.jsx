@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import wordsJson from "./assets/words.json";
 import Letter from "./components/letter";
 import "./App.scss";
@@ -30,6 +31,36 @@ function App() {
     "ou",
     "ea",
     "hi",
+    "is",
+    "or",
+    "ar",
+    "as",
+    "of",
+    "al",
+    "ve",
+    "se",
+    "me",
+    "no",
+    "so",
+    "li",
+    "le",
+    "de",
+    "be",
+    "lo",
+    "pe",
+    "ci",
+    "ti",
+    "wi",
+    "we",
+    "fo",
+    "do",
+    "am",
+    "up",
+    "go",
+    "if",
+    "my",
+    "us",
+    "by",
   ]);
   const [randomLetters, setRandomLetters] = useState("");
   const [joinedGuess, setJoinedGuess] = useState([]);
@@ -169,6 +200,7 @@ function App() {
         guessString.includes(randomLetters) &&
         guessString.length >= 3
       ) {
+        const updatedWords = words.filter((word) => word !== guessString);
         resetTimer();
         console.log("You win!");
         setGuess([]);
@@ -176,6 +208,7 @@ function App() {
           twoLetterStrings[Math.floor(Math.random() * twoLetterStrings.length)]
         );
         setScore((prev) => prev + 1);
+        setWords(updatedWords);
       }
     }
 
@@ -230,7 +263,14 @@ function App() {
       <h3 className="text-xl text-white mb-5 absolute top-10 right-10">
         High Score: {highScore}
       </h3>
-      <h1 className="text-4xl text-white mb-5">Score: {score}</h1>
+      <motion.h1
+        key={score}
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 0.5 }}
+        className="text-4xl text-white mb-5"
+      >
+        Score: {score}
+      </motion.h1>
       <Progress value={progressBarWidth} className="w-2/3 " />
 
       <div className="w-full h-1 flex items-center justify-center mt-10">
