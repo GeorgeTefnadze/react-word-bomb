@@ -9,7 +9,7 @@ export default function RouterPage() {
     <Routes>
       <Route path="/" element={<StartPage />} />
       <Route path="/game" element={<App />} />
-      <Route path="/lost" element={<LostPage />} />
+      <Route path="/lost/:score" element={<LostPage />} />
     </Routes>
   );
 }

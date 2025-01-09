@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
+import { useNavigate } from "react-router-dom";
 import wordsJson from "./assets/words.json";
 import Letter from "./components/letter";
 import "./App.scss";
 
 function App() {
+  const navigate = useNavigate();
   const [words, setWords] = useState(wordsJson);
   const [guess, setGuess] = useState([]);
   const [twoLetterStrings, setTwoLetterStrings] = useState([
@@ -34,6 +36,8 @@ function App() {
   const [greenIndexes, setGreenIndexes] = useState([]);
   const [timeLeft, setTimeLeft] = useState(5); // Timer starts at 5 seconds
   const [isRunning, setIsRunning] = useState(true); // Control if the timer is running
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
   useEffect(() => {
     // console.clear();
@@ -70,6 +74,10 @@ function App() {
       setRandomLetters(
         twoLetterStrings[Math.floor(Math.random() * twoLetterStrings.length)]
       );
+    }
+    const savedHihgScore = localStorage.getItem("highScore");
+    if (savedHihgScore) {
+      setHighScore(savedHihgScore);
     }
   }, []);
 
@@ -167,6 +175,7 @@ function App() {
         setRandomLetters(
           twoLetterStrings[Math.floor(Math.random() * twoLetterStrings.length)]
         );
+        setScore((prev) => prev + 1);
       }
     }
 
@@ -181,10 +190,25 @@ function App() {
       }, 1000);
     } else {
       clearInterval(timer);
+      handleLoose();
+    }
+
+    function handleLoose() {
+      if (timeLeft === 0) {
+        console.log("You lost!");
+        navigate("/lost/" + score);
+      }
     }
 
     return () => clearInterval(timer); // Cleanup the timer
   }, [timeLeft, isRunning]);
+
+  useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score);
+      localStorage.setItem("highScore", score);
+    }
+  }, [score]);
 
   // Calculate progress bar width as a percentage
   const progressBarWidth = (timeLeft / 5) * 100;
@@ -203,6 +227,10 @@ function App() {
           style={{ width: `${progressBarWidth}%` }}
         ></div>
       </div> */}
+      <h3 className="text-xl text-white mb-5 absolute top-10 right-10">
+        High Score: {highScore}
+      </h3>
+      <h1 className="text-4xl text-white mb-5">Score: {score}</h1>
       <Progress value={progressBarWidth} className="w-2/3 " />
 
       <div className="w-full h-1 flex items-center justify-center mt-10">
