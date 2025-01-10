@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "./contexts/authContext";
 import wordsJson from "./assets/words.json";
 import Letter from "./components/letter";
 import "./App.scss";
@@ -69,6 +70,12 @@ function App() {
   const [isRunning, setIsRunning] = useState(true); // Control if the timer is running
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
+
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    console.log(currentUser);
+  }, []);
 
   useEffect(() => {
     // console.clear();
