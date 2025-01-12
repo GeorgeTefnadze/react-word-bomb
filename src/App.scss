@@ -11,3 +11,31 @@
 //     }
 //   }
 // }
+.currentSelected {
+  position: relative;
+}
+.currentSelected::before {
+  content: "";
+  position: absolute;
+  top: -20px; /* Adjust based on arrow size */
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  border-left: 10px solid transparent; /* Left side of the arrow */
+  border-right: 10px solid transparent; /* Right side of the arrow */
+  border-bottom: 10px solid #f0f0f0; /* Color matches the background */
+  width: 0;
+  height: 0;
+  z-index: 2; /* Ensure it’s above background elements */
+  animation: bounce 0.7s infinite;
+  @keyframes bounce {
+    0% {
+      top: -20px;
+    }
+    50% {
+      top: -15px;
+    }
+    100% {
+      top: -20px;
+    }
+  }
+}

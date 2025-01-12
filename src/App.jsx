@@ -11,7 +11,7 @@ function App() {
   const navigate = useNavigate();
   const [words, setWords] = useState(wordsJson);
   const [guess, setGuess] = useState([]);
-  const [twoLetterStrings, setTwoLetterStrings] = useState([
+  const twoLetterStrings = [
     "th",
     "he",
     "in",
@@ -62,10 +62,11 @@ function App() {
     "my",
     "us",
     "by",
-  ]);
+  ];
   const [randomLetters, setRandomLetters] = useState("");
   const [joinedGuess, setJoinedGuess] = useState([]);
   const [greenIndexes, setGreenIndexes] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(5); // Timer starts at 5 seconds
   const [isRunning, setIsRunning] = useState(true); // Control if the timer is running
   const [score, setScore] = useState(0);
@@ -100,6 +101,7 @@ function App() {
       }
       if (guess[guess.length - 1] === randomLetters[0] && !found) {
         indexes.push(guess.length - 1);
+        setCurrentIndex(guess.length - 1);
       }
       setGreenIndexes(indexes);
     };
@@ -193,9 +195,11 @@ function App() {
     if (includesBoth && guess.join("").includes(randomLetters)) {
       console.log("Includes both");
       setJoinedGuess([...guess]);
+      setCurrentIndex(guess.length - 1);
     } else {
       console.log("before:", before);
       setJoinedGuess([...before, ...randomLetters]);
+      setCurrentIndex(before.length - 1 + randomLetters.length - 2);
     }
   }, [guess, randomLetters]); // Trigger this effect whenever `guess` or `randomLetters` changes
 
@@ -280,10 +284,11 @@ function App() {
       </motion.h1>
       <Progress value={progressBarWidth} className="w-2/3 " />
 
-      <div className="w-full h-1 flex items-center justify-center mt-10">
+      <div className="w-full h-1 flex items-center justify-center mt-16">
         {joinedGuess.map((letter, index) => (
           <Letter
             key={index}
+            currentIndex={currentIndex}
             index={index}
             letter={letter}
             greenIndexes={greenIndexes}
